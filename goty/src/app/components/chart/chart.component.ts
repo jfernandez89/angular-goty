@@ -1,15 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.scss']
+  styleUrls: ['./chart.component.scss'],
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent {
+  results: any[] = [
+    {
+      name: 'Game 1',
+      value: 100,
+    },
+    {
+      name: 'Game 2',
+      value: 288,
+    },
+    {
+      name: 'Game 3',
+      value: 50,
+    },
+    {
+      name: 'Game 4',
+      value: 70,
+    },
+  ];
 
-  constructor() { }
+  // Options
+  showXAxis = true;
+  showYAxis = true;
+  gradient = true;
+  showLegend = true;
+  showXAxisLabel = true;
+  xAxisLabel = 'Games';
+  showYAxisLabel = true;
+  yAxisLabel = 'Votes';
+  colorScheme = 'nightLights';
 
-  ngOnInit(): void {
+  constructor() {}
+
+  onSelect(event) {
+    console.log(event);
   }
-
 }

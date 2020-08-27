@@ -1,3 +1,5 @@
+import * as cors from "cors";
+import * as express from "express";
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
 
@@ -11,13 +13,14 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-// Start writing Firebase Functions //
-export const helloWorld = functions.https.onRequest((request, response) => {
-  response.json("Hello from Firebase!");
-});
+// Express server config
+const app = express();
 
-// The async function allows to control promises
-export const getGoty = functions.https.onRequest(async (request, response) => {
+// Allow to make petitions from other domain
+app.use(cors({ origin: true }));
+
+// Endpoint declaration
+app.get("/goty", async (request, response) => {
   // Access to goty collection of the database and saves its reference
   const gotyRef = db.collection("goty");
 
@@ -29,3 +32,32 @@ export const getGoty = functions.https.onRequest(async (request, response) => {
 
   response.json(games);
 });
+
+app.post("/goty/:id", async (request, response) => {
+  const id = request.params.id;
+
+  const gameRef = db.collection("goty").doc(id);
+
+  const gameSnapshot = await gameRef.get();
+
+  if (!gameSnapshot.exists) {
+    response.status(404).json({
+      done: false,
+      message: "There is no game with that ID: " + id,
+    });
+  } else {
+    const prevState = gameSnapshot.data() || { votes: 0 };
+
+    await gameRef.update({
+      votes: prevState.votes + 1,
+    });
+
+    response.json({
+      done: true,
+      message: "Thanks for voting",
+    });
+  }
+});
+
+// Exports the api to do requests from angular
+export const api = functions.https.onRequest(app);

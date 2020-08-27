@@ -43,8 +43,6 @@ export class ChartComponent implements OnDestroy {
     const newResults = [...this.results];
 
     this.interval = setInterval(() => {
-      console.log('tick');
-
       for (const game of newResults) {
         game.value = Math.round(Math.random() * 500);
       }

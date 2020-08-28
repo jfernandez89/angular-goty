@@ -34,4 +34,16 @@ export class GameService extends ApiService {
       );
     }
   }
+
+  // VOTE AS GOTY //
+  public voteAsGoty(id: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}${this.API_PATH}/${id}`, {}).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError((error) => {
+        return throwError(error);
+      })
+    );
+  }
 }

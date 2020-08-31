@@ -2,12 +2,14 @@
 <br />
 <div class="row">
   <div class="col">
-    <div class="card-columns">
+    <div class="card-deck">
       <div class="card bg-dark" *ngFor="let game of games">
         <img class="card-img-top" [src]="game.url" alt="game.name" />
         <div class="card-body">
-          <h6 class="card-title">{{ game.name }}</h6>
-          <hr />
+          <h5 class="card-title">{{ game.name }}</h5>
+          <p class="card-text">{{ game.description }}</p>
+        </div>
+        <div class="card-footer">
           <button
             class="btn btn-block btn-outline-primary"
             (click)="vote(game.id)"

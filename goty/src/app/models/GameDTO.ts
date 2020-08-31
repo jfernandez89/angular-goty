@@ -1,3 +1,21 @@
 export class GameDTO {
-  constructor(id: string, name: string, url: string, votes: number) {}
+  id: string;
+  name: string;
+  url: string;
+  votes: number;
+  description: string;
+
+  constructor(
+    id: string,
+    name: string,
+    url: string,
+    votes: number,
+    description: string
+  ) {
+    this.id = id;
+    this.name = name;
+    this.url = url;
+    this.votes = votes;
+    this.description = description;
+  }
 }
